@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserService {
-    User findByUsername(UserDto userDto);
+    User findByUsername(String username, String password);
     User savedUser(UserDto userDto);
     Optional<User> findById(Long id);
     void deleteUser(Long id);

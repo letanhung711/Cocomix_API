@@ -5,7 +5,6 @@ import com.example.Library.model.User;
 import com.example.Library.service.CacheService;
 import com.example.Library.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,12 +25,13 @@ public class AdminController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<User> login(@RequestBody UserDto userDto) {
-        User user = userService.findByUsername(userDto);
+    public ResponseEntity<String> login(@RequestParam("username") String username,
+                                      @RequestParam("password") String password) {
+        User user = userService.findByUsername(username, password);
         if(user == null){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.badRequest().body("Login fail!");
         }
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        return ResponseEntity.ok("Login successful!");
     }
 
     @PostMapping("/register")
@@ -97,5 +97,10 @@ public class AdminController {
         User user1 = userService.updatePass(user.getId(), newPass);
         cacheService.removeToken(token);
         return ResponseEntity.ok("Update password successful!");
+    }
+
+    @PostMapping("/encrypt-password")
+    public ResponseEntity<String> encryptPassword(@RequestParam("password") String password) {
+        return ResponseEntity.ok(userService.encryptPassword(password));
     }
 }

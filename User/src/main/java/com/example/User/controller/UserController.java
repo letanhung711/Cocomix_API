@@ -36,12 +36,13 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<User> login(@RequestBody UserDto userDto) {
-        User user = userService.findByUsername(userDto);
+    public ResponseEntity<String> login(@RequestParam("username") String username,
+                                      @RequestParam("password") String password) {
+        User user = userService.findByUsername(username, password);
         if(user == null){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.badRequest().body("Login fail!!!");
         }
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        return ResponseEntity.ok("Login successful!");
     }
 
     @GetMapping("/{userId}")

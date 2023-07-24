@@ -25,13 +25,13 @@ public class UserServiceImpl implements UserService {
     private PasswordEncoder passwordEncoder;
 
     @Override
-    public User findByUsername(UserDto userDto) {
-        User user = userRepository.findByUsername(userDto.getUsername());
+    public User findByUsername(String username, String password) {
+        User user = userRepository.findByUsername(username);
         if(user == null)
             return null;
-        String password = userDto.getPassword();
+        String pass = password;
         String passEncode = user.getPassword();
-        boolean rs = passwordEncoder.matches(password, passEncode);
+        boolean rs = passwordEncoder.matches(pass, passEncode);
         if(rs == true){
             return user;
         }else {
