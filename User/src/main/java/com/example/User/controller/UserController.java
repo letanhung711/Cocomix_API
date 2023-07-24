@@ -99,4 +99,9 @@ public class UserController {
         cacheService.removeToken(token);
         return ResponseEntity.ok("Update password successful!");
     }
+
+    @PostMapping("/encrypt-password")
+    public ResponseEntity<String> encryptPassword(@RequestParam("password") String password) {
+        return ResponseEntity.ok(userService.encryptPassword(password));
+    }
 }

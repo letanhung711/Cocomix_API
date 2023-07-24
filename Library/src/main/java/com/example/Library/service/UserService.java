@@ -1,6 +1,7 @@
 package com.example.Library.service;
 
 import com.example.Library.dto.UserDto;
+import com.example.Library.model.Role;
 import com.example.Library.model.User;
 
 import java.util.List;
@@ -16,4 +17,5 @@ public interface UserService {
     List<User> searchUser(String keyword);
     User updatePass(Long id, String password);
     User findByEmail(String email);
+    String encryptPassword(String password);
 }
