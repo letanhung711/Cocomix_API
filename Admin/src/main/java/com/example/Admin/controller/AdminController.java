@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/admin")
@@ -53,12 +54,12 @@ public class AdminController {
     }
 
     @GetMapping("")
-    public ResponseEntity<List<User>> searchAndGetAllAdmin(@RequestParam(value = "query", required = false) String keyword) {
-        if(keyword != null){
-            return ResponseEntity.ok(userService.searchUser(keyword));
-        }else {
-            return ResponseEntity.ok(userService.getAllUser());
+    public ResponseEntity<List<User>> getAdmin(@RequestParam(value = "query", required = false) String keyword) {
+        List<User> admins = userService.getAllUser();
+        if(keyword != null && !keyword.isEmpty()) {
+            admins = userService.searchUser(keyword);
         }
+        return ResponseEntity.ok(admins);
     }
 
     @DeleteMapping("/{userId}")

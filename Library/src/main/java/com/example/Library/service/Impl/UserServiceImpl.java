@@ -1,7 +1,6 @@
 package com.example.Library.service.Impl;
 
 import com.example.Library.dto.UserDto;
-import com.example.Library.model.Role;
 import com.example.Library.model.User;
 import com.example.Library.repository.RoleRepository;
 import com.example.Library.repository.UserRepository;

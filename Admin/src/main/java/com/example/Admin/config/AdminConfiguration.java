@@ -41,9 +41,18 @@ public class AdminConfiguration extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET, "/admin/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/product/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/category/**").permitAll()
+
                 .antMatchers(HttpMethod.POST, "/admin/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/product/**").permitAll()
+
                 .antMatchers(HttpMethod.DELETE, "/admin/**").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/product/**").permitAll()
+
                 .antMatchers(HttpMethod.PUT, "/admin/**").permitAll()
+                .antMatchers(HttpMethod.PUT, "/product/**").permitAll()
+
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

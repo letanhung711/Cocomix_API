@@ -55,12 +55,12 @@ public class UserController {
     }
 
     @GetMapping("")
-    public ResponseEntity<List<User>> searchUser(@RequestParam(value = "query", required = false) String keyword){
-        if(keyword != null) {
-            return ResponseEntity.ok(userService.searchUser(keyword));
-        }else {
-            return ResponseEntity.ok(userService.getAllUser());
+    public ResponseEntity<List<User>> getUser(@RequestParam(value = "query", required = false) String keyword){
+        List<User> users = userService.getAllUser();
+        if(keyword != null && !keyword.isEmpty()) {
+            users = userService.searchUser(keyword);
         }
+        return ResponseEntity.ok(users);
     }
 
     @DeleteMapping("/{userId}")

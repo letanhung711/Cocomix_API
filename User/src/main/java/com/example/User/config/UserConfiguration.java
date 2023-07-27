@@ -42,9 +42,18 @@ public class UserConfiguration extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .authorizeRequests()
                 .antMatchers(HttpMethod.GET,"/user/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/product/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/category/**").permitAll()
+
                 .antMatchers(HttpMethod.POST, "/user/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/product/**").permitAll()
+
                 .antMatchers(HttpMethod.DELETE,"/user/**").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/product/**").permitAll()
+
                 .antMatchers(HttpMethod.PUT, "/user/**").permitAll()
+                .antMatchers(HttpMethod.PUT, "/product/**").permitAll()
+
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
