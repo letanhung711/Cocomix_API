@@ -47,12 +47,15 @@ public class UserConfiguration extends WebSecurityConfigurerAdapter {
 
                 .antMatchers(HttpMethod.POST, "/user/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/product/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/category/**").permitAll()
 
                 .antMatchers(HttpMethod.DELETE,"/user/**").permitAll()
                 .antMatchers(HttpMethod.DELETE, "/product/**").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/category/**").permitAll()
 
                 .antMatchers(HttpMethod.PUT, "/user/**").permitAll()
                 .antMatchers(HttpMethod.PUT, "/product/**").permitAll()
+                .antMatchers(HttpMethod.PUT, "/category/**").permitAll()
 
                 .anyRequest().authenticated()
                 .and()

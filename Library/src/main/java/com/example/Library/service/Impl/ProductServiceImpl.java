@@ -21,8 +21,6 @@ import java.util.Optional;
 public class ProductServiceImpl implements ProductService {
     @Autowired
     private ProductRepository productRepository;
-    @Autowired
-    private CategoryRepository categoryRepository;
 
     @Override
     public Optional<Product> findById(Long id) {
@@ -67,16 +65,6 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public void deleteProduct(Long id) {
         productRepository.deleteById(id);
-    }
-
-    @Override
-    public List<Category> getAllCategory() {
-        return categoryRepository.findAll();
-    }
-
-    @Override
-    public List<Product> getProductsByCategoryId(Long id) {
-        return productRepository.findByCategories_Id(id);
     }
 
     public Timestamp convertToDate(String date){

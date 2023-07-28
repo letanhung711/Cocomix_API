@@ -46,12 +46,15 @@ public class AdminConfiguration extends WebSecurityConfigurerAdapter {
 
                 .antMatchers(HttpMethod.POST, "/admin/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/product/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/category/**").permitAll()
 
                 .antMatchers(HttpMethod.DELETE, "/admin/**").permitAll()
                 .antMatchers(HttpMethod.DELETE, "/product/**").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/category/**").permitAll()
 
                 .antMatchers(HttpMethod.PUT, "/admin/**").permitAll()
                 .antMatchers(HttpMethod.PUT, "/product/**").permitAll()
+                .antMatchers(HttpMethod.PUT, "/category/**").permitAll()
 
                 .anyRequest().authenticated()
                 .and()

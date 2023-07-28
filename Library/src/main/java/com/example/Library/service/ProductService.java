@@ -14,6 +14,4 @@ public interface ProductService {
     Product save(ProductDto productDto);
     Product updateProduct(Long id, ProductDto productDto);
     void deleteProduct(Long id);
-    List<Category> getAllCategory();
-    List<Product> getProductsByCategoryId(Long id);
 }
