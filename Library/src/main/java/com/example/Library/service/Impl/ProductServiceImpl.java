@@ -1,9 +1,7 @@
 package com.example.Library.service.Impl;
 
 import com.example.Library.dto.ProductDto;
-import com.example.Library.model.Category;
 import com.example.Library.model.Product;
-import com.example.Library.repository.CategoryRepository;
 import com.example.Library.repository.ProductRepository;
 import com.example.Library.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;

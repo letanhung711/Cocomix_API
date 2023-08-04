@@ -3,6 +3,7 @@ package com.example.User.controller;
 import com.example.Library.dto.UserDto;
 import com.example.Library.model.User;
 import com.example.Library.service.CacheService;
+import com.example.Library.service.RoleService;
 import com.example.Library.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +16,9 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/user")
 public class UserController {
+    @Autowired
+    private RoleService roleService;
+
     @Autowired
     private UserService userService;
 
@@ -104,5 +108,12 @@ public class UserController {
     @PostMapping("/encrypt-password")
     public ResponseEntity<String> encryptPassword(@RequestParam("password") String password) {
         return ResponseEntity.ok(userService.encryptPassword(password));
+    }
+
+    @PostMapping("/{userId}/role/{roleId}")
+    public ResponseEntity<String> addAdminToRole(@PathVariable("userId") Long userId,
+                                                 @PathVariable("roleId") Long roleId) {
+        String user = roleService.addUserToRoles(userId, roleId);
+        return ResponseEntity.ok(user);
     }
 }

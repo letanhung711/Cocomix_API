@@ -1,6 +1,7 @@
 package com.example.Library.service.Impl;
 
 import com.example.Library.dto.UserDto;
+import com.example.Library.model.Role;
 import com.example.Library.model.User;
 import com.example.Library.repository.RoleRepository;
 import com.example.Library.repository.UserRepository;
@@ -50,7 +51,6 @@ public class UserServiceImpl implements UserService {
         user.setUsername(userDto.getUsername());
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setCreate_time(dateNow.toString());
-        user.setRoles(Arrays.asList(roleRepository.findByName("admin")));
         return userRepository.save(user);
     }
 

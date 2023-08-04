@@ -1,5 +1,7 @@
 package com.example.Library.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,6 +13,7 @@ import java.util.Collection;
 @NoArgsConstructor @AllArgsConstructor @Data
 @Entity
 @Table(name = "product")
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,4 +30,8 @@ public class Product {
     @JoinTable(name = "product_category", joinColumns = @JoinColumn(name = "product_id", referencedColumnName = "product_id"),
                 inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "category_id"))
     private Collection<Category> categories;
+
+    @OneToMany(mappedBy = "products", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private Collection<Order> orders;
 }

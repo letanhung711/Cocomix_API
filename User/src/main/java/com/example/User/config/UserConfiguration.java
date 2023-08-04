@@ -44,18 +44,26 @@ public class UserConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.GET,"/user/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/product/**").permitAll()
                 .antMatchers(HttpMethod.GET, "/category/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/role/**").permitAll()
+                .antMatchers(HttpMethod.GET, "/order/**").permitAll()
 
                 .antMatchers(HttpMethod.POST, "/user/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/product/**").permitAll()
                 .antMatchers(HttpMethod.POST, "/category/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/role/**").permitAll()
+                .antMatchers(HttpMethod.POST, "/order/**").permitAll()
 
                 .antMatchers(HttpMethod.DELETE,"/user/**").permitAll()
                 .antMatchers(HttpMethod.DELETE, "/product/**").permitAll()
                 .antMatchers(HttpMethod.DELETE, "/category/**").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/role/**").permitAll()
+                .antMatchers(HttpMethod.DELETE, "/order/**").permitAll()
 
                 .antMatchers(HttpMethod.PUT, "/user/**").permitAll()
                 .antMatchers(HttpMethod.PUT, "/product/**").permitAll()
                 .antMatchers(HttpMethod.PUT, "/category/**").permitAll()
+                .antMatchers(HttpMethod.PUT, "/role/**").permitAll()
+                .antMatchers(HttpMethod.PUT, "/order/**").permitAll()
 
                 .anyRequest().authenticated()
                 .and()
