@@ -8,17 +8,17 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.util.Collection;
 
-@AllArgsConstructor @NoArgsConstructor @Data
 @Entity
-@Table(name = "roles")
-public class Role {
+@Table(name = "permission")
+@Data @AllArgsConstructor @NoArgsConstructor
+public class Permission {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "role_id")
+    @Column(name = "idpermission")
     private Long id;
     private String name;
 
-    @OneToMany(mappedBy = "role")
+    @OneToMany(mappedBy = "permission")
     @JsonManagedReference
     private Collection<RoleScreenPermission> roleScreenPermissions;
 }

@@ -6,19 +6,23 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.sql.Blob;
 import java.util.Collection;
 
-@AllArgsConstructor @NoArgsConstructor @Data
 @Entity
-@Table(name = "roles")
-public class Role {
+@Table(name = "screen")
+@Data @AllArgsConstructor @NoArgsConstructor
+public class Screen {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "role_id")
+    @Column(name = "idscreen")
     private Long id;
     private String name;
+    @Lob
+    private byte[] images;
+    private String description;
 
-    @OneToMany(mappedBy = "role")
+    @OneToMany(mappedBy = "screen")
     @JsonManagedReference
     private Collection<RoleScreenPermission> roleScreenPermissions;
 }

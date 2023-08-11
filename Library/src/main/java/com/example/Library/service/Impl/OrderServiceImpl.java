@@ -1,18 +1,18 @@
 package com.example.Library.service.Impl;
 
 import com.example.Library.dto.OrderDto;
-import com.example.Library.model.Order;
-import com.example.Library.model.OrderDetail;
-import com.example.Library.model.OrderStatus;
-import com.example.Library.model.Product;
+import com.example.Library.dto.User_OrderDto;
+import com.example.Library.model.*;
 import com.example.Library.repository.OrderDetailRepository;
 import com.example.Library.repository.OrderRepository;
 import com.example.Library.repository.ProductRepository;
+import com.example.Library.repository.UserRepository;
 import com.example.Library.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +24,8 @@ public class OrderServiceImpl implements OrderService {
     private OrderRepository orderRepository;
     @Autowired
     private OrderDetailRepository orderDetailRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Override
     public Optional<Order> findById(Long id) {
@@ -34,8 +36,12 @@ public class OrderServiceImpl implements OrderService {
     public String newOrder(OrderDto orderDto) {
         Timestamp timestamp = new Timestamp(System.currentTimeMillis());
         Product product = productRepository.findByName(orderDto.getTotalproducts());
+        User user = userRepository.findByFullName(orderDto.getName());
         if(product == null) {
-            return "No product found!";
+            return "Not product found!";
+        }
+        if(user == null) {
+            return "Not user found!";
         }
 
         Order order = new Order();
@@ -54,6 +60,7 @@ public class OrderServiceImpl implements OrderService {
         orderDetail.setTotalprice(Double.parseDouble(orderDto.getTotalprice()));
         orderDetail.setCreate_time(timestamp);
         orderDetail.setOrders(order);
+        orderDetail.setUsers(user);
         orderDetail.setProducts(product);
         orderDetailRepository.save(orderDetail);
 
@@ -126,6 +133,25 @@ public class OrderServiceImpl implements OrderService {
         order.setStatus(OrderStatus.CANCEL);
         orderRepository.save(order);
         return "Cancel the order";
+    }
+
+    @Override
+    public List<User_OrderDto> getListOfUserOrders(Long userId) {
+        List<OrderDetail> orderDetails = orderDetailRepository.findByUsers_Id(userId);
+
+        List<User_OrderDto> userOrders = new ArrayList<>();
+        for (OrderDetail orderDetail : orderDetails) {
+            User user = orderDetail.getUsers();
+            Order order = orderDetail.getOrders();
+            User_OrderDto userOrderDto = new User_OrderDto();
+            userOrderDto.setIduser(user.getId());
+            userOrderDto.setName(order.getName());
+            userOrderDto.setNgaydat(order.getNgaydat());
+            userOrderDto.setAddress(order.getAddress());
+            userOrderDto.setIdorder(order.getId());
+            userOrders.add(userOrderDto);
+        }
+        return userOrders;
     }
 
     @Override

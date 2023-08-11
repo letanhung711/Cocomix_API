@@ -29,12 +29,12 @@ public class OrderController {
     }
 
     @GetMapping("/{orderId}")
-    public ResponseEntity<Optional<Order>> getOrder(@PathVariable("orderId") Long orderId) {
+    public ResponseEntity<?> getOrder(@PathVariable("orderId") Long orderId) {
         Optional<Order> order = orderService.getOrderInformation(orderId);
-        if(order == null){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        if(order.isEmpty()){
+            return ResponseEntity.badRequest().body("Not found order!");
         }
-        return new ResponseEntity<>(order, HttpStatus.OK);
+        return ResponseEntity.ok(order);
     }
 
     @PostMapping("")

@@ -1,7 +1,9 @@
 package com.example.Library.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,6 +11,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.Collection;
+import java.util.List;
 
 @NoArgsConstructor @AllArgsConstructor @Data
 @Entity
@@ -34,4 +37,17 @@ public class Product {
     @OneToMany(mappedBy = "products", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private Collection<Order> orders;
+
+    @OneToMany(mappedBy = "products")
+    @JsonManagedReference
+    private List<OrderDetail> orderDetails;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "user_id")
+    @JsonBackReference
+    private User users;
+
+    @OneToMany(mappedBy = "product")
+    @JsonIgnore
+    private Collection<MarketProduct> marketProducts;
 }

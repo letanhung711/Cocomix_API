@@ -1,8 +1,10 @@
 package com.example.User.controller;
 
 import com.example.Library.dto.UserDto;
+import com.example.Library.dto.User_OrderDto;
 import com.example.Library.model.User;
 import com.example.Library.service.CacheService;
+import com.example.Library.service.OrderService;
 import com.example.Library.service.RoleService;
 import com.example.Library.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,9 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private OrderService orderService;
 
     @Autowired
     private CacheService cacheService;
@@ -50,12 +55,12 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<Optional<User>> getUserInformation(@PathVariable("userId") Long id) {
+    public ResponseEntity<?> getUserInformation(@PathVariable("userId") Long id) {
         Optional<User> user = userService.findById(id);
         if(user.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.badRequest().body("Not found user!");
         }
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        return ResponseEntity.ok(user);
     }
 
     @GetMapping("")
@@ -115,5 +120,14 @@ public class UserController {
                                                  @PathVariable("roleId") Long roleId) {
         String user = roleService.addUserToRoles(userId, roleId);
         return ResponseEntity.ok(user);
+    }
+
+    @GetMapping("/{userId}/order")
+    public ResponseEntity<List<User_OrderDto>> getListOfUserOrders(@PathVariable("userId") Long userId) {
+        List<User_OrderDto> orders = orderService.getListOfUserOrders(userId);
+        if(orders.isEmpty()) {
+            return ResponseEntity.ok(orders);
+        }
+        return ResponseEntity.ok(orders);
     }
 }

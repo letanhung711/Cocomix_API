@@ -38,12 +38,12 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<Product>> getProductId(@PathVariable("id") Long id) {
+    public ResponseEntity<?> getProductId(@PathVariable("id") Long id) {
         Optional<Product> product = productService.getProductInformation(id);
         if(product.isEmpty()) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.badRequest().body("Not found product!");
         }
-        return new ResponseEntity<>(product, HttpStatus.OK);
+        return ResponseEntity.ok(product);
     }
 
     @PutMapping("/{id}")

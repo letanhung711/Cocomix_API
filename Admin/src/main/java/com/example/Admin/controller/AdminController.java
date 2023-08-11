@@ -1,8 +1,12 @@
 package com.example.Admin.controller;
 
 import com.example.Library.dto.UserDto;
+import com.example.Library.dto.User_OrderDto;
+import com.example.Library.model.Order;
+import com.example.Library.model.OrderDetail;
 import com.example.Library.model.User;
 import com.example.Library.service.CacheService;
+import com.example.Library.service.OrderService;
 import com.example.Library.service.RoleService;
 import com.example.Library.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +24,8 @@ public class AdminController {
     private UserService userService;
     @Autowired
     private RoleService roleService;
+    @Autowired
+    private OrderService orderService;
     @Autowired
     private CacheService cacheService;
     @GetMapping("/hello")
@@ -47,12 +53,12 @@ public class AdminController {
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<Optional<User>> getAdminInformation(@PathVariable("userId") Long id) {
+    public ResponseEntity<?> getAdminInformation(@PathVariable("userId") Long id) {
         Optional<User> user = userService.findById(id);
         if(user.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+            return ResponseEntity.badRequest().body("Not found admin!");
         }
-        return new ResponseEntity<>(user, HttpStatus.OK);
+        return ResponseEntity.ok(user);
     }
 
     @GetMapping("")
@@ -112,5 +118,14 @@ public class AdminController {
                                                @PathVariable("roleId") Long roleId) {
         String user = roleService.addUserToRoles(adminId, roleId);
         return ResponseEntity.ok(user);
+    }
+
+    @GetMapping("/{adminId}/order")
+    public ResponseEntity<List<User_OrderDto>> getListOfUserOrders(@PathVariable("adminId") Long adminId) {
+        List<User_OrderDto> orders = orderService.getListOfUserOrders(adminId);
+        if(orders.isEmpty()) {
+            return ResponseEntity.ok(orders);
+        }
+        return ResponseEntity.ok(orders);
     }
 }
