@@ -2,13 +2,8 @@ package com.example.Admin.controller;
 
 import com.example.Library.dto.UserDto;
 import com.example.Library.dto.User_OrderDto;
-import com.example.Library.model.Order;
-import com.example.Library.model.OrderDetail;
 import com.example.Library.model.User;
-import com.example.Library.service.CacheService;
-import com.example.Library.service.OrderService;
-import com.example.Library.service.RoleService;
-import com.example.Library.service.UserService;
+import com.example.Library.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +21,8 @@ public class AdminController {
     private RoleService roleService;
     @Autowired
     private OrderService orderService;
+    @Autowired
+    private ScreenService screenService;
     @Autowired
     private CacheService cacheService;
     @GetMapping("/hello")
@@ -127,5 +124,11 @@ public class AdminController {
             return ResponseEntity.ok(orders);
         }
         return ResponseEntity.ok(orders);
+    }
+
+    @PostMapping("/{userId}/screen/{screenId}")
+    public ResponseEntity<String> AssignScreensUsers(@PathVariable("userId") Long userId,
+                                                     @PathVariable("screenId") Long screenId) {
+        return ResponseEntity.ok(screenService.assignsScreensToUsers(screenId, userId));
     }
 }

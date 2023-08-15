@@ -44,4 +44,9 @@ public class ScreenController {
                                                @RequestBody ScreenDto screenDto) {
         return ResponseEntity.ok(screenService.updateScreen(id, screenDto));
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteScreen(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(screenService.deleteScreen(id));
+    }
 }
